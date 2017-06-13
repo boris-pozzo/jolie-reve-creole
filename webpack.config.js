@@ -6,13 +6,17 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 process.traceDeprecation = true;
 
 module.exports = {
-
-  entry: ['./client/index.js'],
+  devtool: 'cheap-module-eval-source-map',
+  entry: [
+    'react-hot-loader/patch',
+    'webpack-hot-middleware/client',
+    path.resolve(__dirname, 'client/index.js'),
+    ],
 
   output: {
-    path: path.resolve(__dirname, 'public/bundles'),
-    filename: '[name]-[hash].js',
-    publicPath: '/public/bundles/',
+    path: path.resolve(__dirname, './dist'),
+    filename: 'bundle.js',
+    publicPath: '/',
   },
 
   plugins: [
