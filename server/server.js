@@ -1,5 +1,6 @@
 const express = require('express');
 const path = require('path');
+const bodyParser = require('body-parser');
 const webpack = require('webpack');
 const webpackConfig = require('../webpack.config.js');
 const webpackDevMiddleware = require('webpack-dev-middleware');
@@ -13,11 +14,18 @@ const port = 3000;
 /* eslint-disable import/no-extraneous-dependencies */
 const compiler = webpack(webpackConfig);
 
-app.use(webpackDevMiddleware(compiler, {noInfo: true, publicPath: webpackConfig.output.publicPath}));
+app.use(webpackDevMiddleware(compiler, {noInfo: false, publicPath: webpackConfig.output.publicPath}));
 app.use(webpackHotMiddleware(compiler));
 /* eslint-enable import/no-extraneous-dependencies */
 
-app.use(express.static('./dist'));
+
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: false }))
+
+// parse application/json
+app.use(bodyParser.json())
+
+app.use('/public', express.static(path.join(__dirname, '../public')));
 
 app.use('/', function (req, res) {
     res.sendFile(path.resolve('client/index.html'));
