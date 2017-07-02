@@ -10,7 +10,7 @@ module.exports = {
   entry: [
     'react-hot-loader/patch',
     'webpack-hot-middleware/client',
-    path.resolve(__dirname, 'client/index.js'),
+    path.resolve(__dirname, 'App/index.js'),
     ],
 
   output: {
